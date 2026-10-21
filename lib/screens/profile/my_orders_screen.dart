@@ -201,6 +201,7 @@ class _PastRow extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(22)),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Thumbs(items: order.items, ring: AppColors.white, size: 38, max: 2),
           const SizedBox(width: 12),
@@ -208,32 +209,42 @@ class _PastRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${order.when} · ${order.items.length} items', style: ts(14, w: W.bold)),
+                Text(
+                  '${order.when} · ${order.items.length} items',
+                  style: ts(14, w: W.bold),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 const SizedBox(height: 3),
                 Row(
                   children: [
                     const Ic(AppIcon.check, size: 13, color: AppColors.leaf),
                     const SizedBox(width: 4),
-                    Text(
-                      'Delivered · ${money(order.total)}',
-                      style: ts(12, w: W.medium, c: AppColors.muted),
+                    Flexible(
+                      child: Text(
+                        'Delivered · ${money(order.total)}',
+                        style: ts(12, w: W.medium, c: AppColors.muted),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
+                Pressable(
+                  onTap: () {
+                    app.addAll({for (final p in order.items) p.id: 1});
+                    showToast(
+                      context,
+                      '${order.items.length} items added to cart',
+                      action: 'View',
+                      onAction: () => Navigator.of(context).pushNamed(Routes.cart),
+                    );
+                  },
+                  child: const Pill('Reorder', icon: AppIcon.repeat, ph: 10, pv: 7),
+                ),
               ],
             ),
-          ),
-          Pressable(
-            onTap: () {
-              app.addAll({for (final p in order.items) p.id: 1});
-              showToast(
-                context,
-                '${order.items.length} items added to cart',
-                action: 'View',
-                onAction: () => Navigator.of(context).pushNamed(Routes.cart),
-              );
-            },
-            child: const Pill('Reorder', icon: AppIcon.repeat, ph: 10, pv: 7),
           ),
         ],
       ),

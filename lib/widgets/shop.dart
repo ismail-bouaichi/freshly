@@ -466,7 +466,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 isCollapsed: true,
                 border: InputBorder.none,
                 hintText: widget.hint,
-                hintStyle: ts(15, w: W.medium, c: AppColors.muted),
+                hintStyle: ts(15, w: W.medium, c: AppColors.muted, ls: 0),
               ),
             ),
           ),

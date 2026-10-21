@@ -361,9 +361,13 @@ class _Sheet extends StatelessWidget {
                               ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        steps[i].$1,
-                        style: ts(11, w: W.bold, c: steps[i].$2 > 0 ? AppColors.ink : AppColors.muted),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          steps[i].$1,
+                          style: ts(11, w: W.bold, c: steps[i].$2 > 0 ? AppColors.ink : AppColors.muted),
+                        ),
                       ),
                     ],
                   ),

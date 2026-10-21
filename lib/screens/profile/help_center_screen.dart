@@ -70,7 +70,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  childAspectRatio: 1.15,
+                  childAspectRatio: 0.98,
                   children: [
                     for (final t in const [
                       (AppIcon.package, AppColors.tintLeaf, AppColors.leafDark, 'Order issues', 'Missing or damaged items'),

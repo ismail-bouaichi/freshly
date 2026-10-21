@@ -32,7 +32,7 @@ onboarding → Home smoke test).
 
 | # | Screen | File |
 |---|---|---|
-| 01 | Onboarding | `screens/auth/onboarding_screen.dart` |
+| 01 | Onboarding — 3 swipeable pages: fresh groceries, local farms, live tracking | `screens/auth/onboarding_screen.dart` |
 | 05 | Sign in | `screens/auth/sign_in_screen.dart` |
 | 12 | Sign up (live email check, password strength) | `screens/auth/sign_up_screen.dart` |
 | 02 | Home (auto-playing promo banners) | `screens/shop/home_screen.dart` |

@@ -177,9 +177,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       const SizedBox(width: 6),
                       Text(p.rating.toStringAsFixed(1), style: ts(14, w: W.black)),
                       const SizedBox(width: 6),
-                      Text(
-                        '(${p.reviews} reviews)',
-                        style: ts(13, w: W.medium, c: AppColors.muted),
+                      Flexible(
+                        child: Text(
+                          '(${p.reviews} reviews)',
+                          style: ts(13, w: W.medium, c: AppColors.muted),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),

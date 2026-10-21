@@ -81,50 +81,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const PageDots(count: 2, index: 0),
                 ],
               ),
-              SizedBox(
-                height: 100,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              // Title on its own line; subtitle shares a row with the produce,
+              // so nothing overlaps or overflows on narrow phones / large text.
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text('Create account', style: ts(30, w: W.black, ls: -0.8)),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text('Join 50k+ neighbours eating fresh, local produce every week.', style: ts(15, c: AppColors.muted, lh: 22)),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 96,
+                    height: 84,
+                    child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        Text('Create account', style: ts(30, w: W.black, ls: -0.8)),
-                        const SizedBox(height: 6),
-                        SizedBox(
-                          width: 236,
-                          child: Text(
-                            'Join 50k+ neighbours eating fresh, local produce every week.',
-                            style: ts(15, c: AppColors.muted, lh: 22),
-                          ),
-                        ),
-                      ],
-                    ),
-                    for (final (i, f) in const [
-                      (Produce.basil, 56.0, -2.0, -6.0, -18.0),
-                      (Produce.carrot, 74.0, 46.0, 18.0, 24.0),
-                      (Produce.strawberry, 62.0, 4.0, 44.0, -12.0),
-                    ].indexed)
-                      Positioned(
-                        right: f.$3,
-                        top: f.$4,
-                        child: Entrance(
-                          delay: Duration(milliseconds: 200 + i * 100),
-                          scale: 0.3,
-                          rotate: i.isOdd ? 14 : -14,
-                          offset: Offset.zero,
-                          child: Bob(
-                            phase: i * 0.3,
-                            amplitude: 5,
-                            child: Transform.rotate(
-                              angle: figmaRot(f.$5),
-                              child: ProduceArt(f.$1, size: f.$2),
+                        for (final (i, f) in const [
+                          (Produce.basil, 50.0, 0.0, -14.0, -18.0),
+                          (Produce.carrot, 64.0, 44.0, 2.0, 24.0),
+                          (Produce.strawberry, 54.0, 0.0, 30.0, -12.0),
+                        ].indexed)
+                          Positioned(
+                            right: f.$3,
+                            top: f.$4,
+                            child: Entrance(
+                              delay: Duration(milliseconds: 200 + i * 100),
+                              scale: 0.3,
+                              rotate: i.isOdd ? 14 : -14,
+                              offset: Offset.zero,
+                              child: Bob(
+                                phase: i * 0.3,
+                                amplitude: 5,
+                                child: Transform.rotate(
+                                  angle: figmaRot(f.$5),
+                                  child: ProduceArt(f.$1, size: f.$2),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                  ],
-                ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               AppTextField(
                 icon: AppIcon.user,
@@ -158,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   AppTextField(
                     icon: AppIcon.lock,
-                    hint: 'Password (6+ characters)',
+                    hint: 'Password',
                     controller: _password,
                     obscure: _obscure,
                     onChanged: (_) => setState(() {}),

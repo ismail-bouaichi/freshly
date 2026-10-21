@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:freshly/core/svg_path.dart';
@@ -58,20 +60,44 @@ void main() {
     expect(arc.getBounds().height, greaterThan(10));
   });
 
-  testWidgets('onboarding → skip lands on Home', (tester) async {
-    tester.view.physicalSize = const Size(1170, 2532);
+  testWidgets('onboarding pages: Next → Next → Get started → Sign up', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2340); // 360 × 780 phone
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(FreshlyApp(state: AppState()));
     // Looping animations never settle, so pump fixed time instead of pumpAndSettle.
     await tester.pump(const Duration(seconds: 2));
-    expect(find.text('Start shopping'), findsOneWidget);
+    expect(find.textContaining('Fresh groceries'), findsOneWidget);
 
-    await tester.tap(find.text('Skip'));
-    await tester.pump();
+    await tester.tap(find.text('Next'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.textContaining('Straight from'), findsOneWidget);
+
+    await tester.tap(find.text('Next'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.textContaining('Track every'), findsOneWidget);
+
+    await tester.tap(find.text('Get started'));
     await tester.pump(const Duration(seconds: 2));
-    expect(find.text('Fresh picks'), findsOneWidget);
-    expect(find.text('Strawberries'), findsWidgets);
+    expect(find.text('Create account'), findsWidgets); // title + button
+  });
+
+  testWidgets('My orders fits a narrow phone with large text', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 3;
+    tester.platformDispatcher.textScaleFactorTestValue = 1.25;
+    addTearDown(tester.view.reset);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+    await tester.pumpWidget(FreshlyApp(state: AppState()));
+    await tester.pump(const Duration(seconds: 1));
+    final nav = tester.state<NavigatorState>(find.byType(Navigator).first);
+    unawaited(nav.pushNamed('/profile/orders'));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.textContaining('Past ·'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(tester.takeException(), isNull); // no RenderFlex overflow
+    expect(find.text('Reorder'), findsWidgets);
   });
 }

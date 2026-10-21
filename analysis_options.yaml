@@ -21,7 +21,6 @@ linter:
     - use_build_context_synchronously
     - use_key_in_widget_constructors
     - unnecessary_null_comparison
-    - unawaited_futures
 
 formatter:
   page_width: 140

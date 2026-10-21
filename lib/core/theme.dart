@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 
 /// Design tokens mirrored from the "Freshly Colors" variables in Figma.
@@ -107,9 +106,6 @@ ThemeData buildTheme() {
       trackHeight: 4,
       rangeThumbShape: RoundRangeSliderThumbShape(enabledThumbRadius: 12, elevation: 3),
       showValueIndicator: ShowValueIndicator.never,
-    ),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(), TargetPlatform.iOS: CupertinoPageTransitionsBuilder()},
     ),
   );
 }
